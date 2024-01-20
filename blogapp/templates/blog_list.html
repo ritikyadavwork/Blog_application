@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block meta %}
+
+{% endblock %}
+{% block title %}  Blog List{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 p-2 mt-3 left">
+            {% for post in post %}
+            <div class="card mb-4">
+                <div class="card">
+                    <img src="{{ post.photos.url }}" alt="{{ post.title }} " class="card-img-top" style="height: 222px;">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.title }}</h2>
+                        <p class="card-text text-muted h6">{{ request.user.username }} | {{ post.created }} </p>
+                        <p class="card-text">{{ post.blog|truncatewords:25 }}</p>
+                        <a href="{% url 'blogapp:fullDetail' post.id%}" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{%endblock%}
+
+
+<!--<div class="container mt-5">-->
+<!--        <div class="row">-->
+<!--                <div class="col-md-4 mb-4">-->
+<!--  {% for post in post %}-->
+<!--                    <div class="card">-->
+<!--                            <img src="{{ product.image.url }}" alt="{{ product.created_name }}" class="card-img-top">-->
+<!--                        </a>-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title">{{ post.title }}</h5>-->
+<!--                            <p class="card-text">{{ product.short_description }}</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae corrupti iste expedita at atque quo quos commodi? -->
+<!--    Quo eligendi consequatur deleniti eum, error unde officiis corrupti quis cupiditate, ab cum.-->
