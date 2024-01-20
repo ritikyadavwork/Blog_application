@@ -19,21 +19,21 @@ def postBlog_view(request):
         photos = request.FILES.get('images')
         instance = Post.objects.create(title=title, blog=blog, photos=photos)
         instance.save()
-        return redirect('/blog-detail')
+        return redirect('/blog-list')
     return render(request, 'postblog.html')
 
 
-def blogDetail_view(request):
+def blogList_view(request):
     posts = Post.objects.all()
     context = {
         "post": posts
     }
-    return render(request, 'blog_view.html', context)
+    return render(request, 'blog_list.html', context)
 
 
-def postBlogDetail_view(request, post_id):
+def blogDetail_view(request, post_id):
     data = get_object_or_404(Post, id=post_id)
     context = {
         'object': data
     }
-    return render(request, 'postBlog_detail.html', context)
+    return render(request, 'blog_detail.html', context)
