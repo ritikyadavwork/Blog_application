@@ -7,11 +7,13 @@
 {% block body %}
 <div class="container">
     <div class="row">
+        {% for post in post %}
         <div class="col-md-4 p-2 mt-3 left">
-            {% for post in post %}
+
             <div class="card mb-4">
                 <div class="card">
-                    <img src="{{ post.photos.url }}" alt="{{ post.title }} " class="card-img-top" style="height: 222px;">
+                    <img src="{{ post.photos.url }}" alt="{{ post.title }} " class="card-img-top"
+                         style="height: 222px;">
                     <div class="card-body">
                         <h2 class="card-title">{{ post.title }}</h2>
                         <p class="card-text text-muted h6">{{ request.user.username }} | {{ post.created }} </p>
@@ -20,9 +22,28 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+        <nav aria-label="...">
+            <ul class="pagination text-center">
+                {% if post.has_previous %}
+                <li class="page-item ">
+                    <a class="page-link" href="?page={{post.previous_page_number}}" tabindex="-1">Previous</a>
+                </li>
 
+                <li class="page-item"><a class="page-link" href="?page=1#">1</a></li>
+                {% endif %}
+                <li class="page-item ">
+                    <a class="page-link" href="">2 </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                {% if post.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{post.next_page_number}}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
 </div>
 {%endblock%}
