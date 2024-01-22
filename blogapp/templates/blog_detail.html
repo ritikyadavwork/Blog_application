@@ -5,12 +5,14 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="col-md-12 card mb-4  mt-5 left  top">
+        <div class="col-md-12 m-auto   mt-3 left  top">
             <div class="card-body">
                 <h1> {{ object.title }}</h1>
-                <p class=" text-muted">{{ request.user.username }} | {{ post.created }}</p>
-                 <img src="{{ object.image.url }}">
-                <p class="card-text ">{{ object.blog  }}</p>
+                <p class=" text-muted">{{ request.user.username }} | {{ object.created }}</p>
+                <img src="{{ object.photos.url }}" alt="{{ object.title }} " class="card-img-top"
+                     style="height: 510px;">
+
+                <p class="card-text mt-3 mb-3">{{ object.blog }}</p>
             </div>
         </div>
     </div>
