@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Post
+from django.core.paginator import Paginator
 
 
 def homeView(request):
@@ -25,8 +26,12 @@ def postBlog_view(request):
 
 def blogList_view(request):
     posts = Post.objects.all()
+    paginator = Paginator(posts, 3)
+    page_num = request.GET.get('page')
+    final_data = paginator.get_page(page_num)
+
     context = {
-        "post": posts
+        "post": final_data
     }
     return render(request, 'blog_list.html', context)
 
