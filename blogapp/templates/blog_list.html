@@ -7,6 +7,16 @@
 {% block body %}
 <div class="container">
     <div class="row">
+        <div class=" m-auto mt-3 justify-content-end  ">
+            <form class="d-flex  w-50 " action="{% url 'blogapp:blogDetail'%}" method="GET">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
         {% for post in post %}
         <div class="col-md-4 p-2 mt-3 left">
             <div class="card mb-4">
@@ -17,31 +27,34 @@
                         <h2 class="card-title">{{ post.title }}</h2>
                         <p class="card-text text-muted h6">{{ request.user.username }} | {{ post.created }} </p>
                         <p class="card-text">{{ post.blog|truncatewords:25 }}</p>
-                        <a href="{% url 'blogapp:fullDetail' post.id%}" class="btn btn-primary">Read More &rarr;</a>
+                        <a href="{% url 'blogapp:fullDetail' post.id%}" class="btn btn-primary">Read More
+                            &rarr;</a>
                     </div>
                 </div>
             </div>
         </div>
         {% endfor %}
-        <nav aria-label="...">
-            <ul class="pagination justify-content-center">
-                {% if post.has_previous %}
-                <li class="page-item ">
-                    <a class="page-link" href="?page={{post.previous_page_number}}" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="?page=1#">1</a></li>
-                {% endif %}
-                <li class="page-item ">
-                    <a class="page-link" href="">2 </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                {% if post.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{post.next_page_number}}">Next</a>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
+        <div>
+            <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                    {% if post.has_previous %}
+                    <li class="page-item ">
+                        <a class="page-link" href="?page={{post.previous_page_number}}" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="?page=1#">1</a></li>
+                    {% endif %}
+                    <li class="page-item ">
+                        <a class="page-link" href="">2 </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    {% if post.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{post.next_page_number}}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 {%endblock%}
