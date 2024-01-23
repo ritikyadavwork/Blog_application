@@ -21,7 +21,7 @@ class category(TimeStampedModel):
 class Comment(TimeStampedModel):
     Author = models.CharField(max_length=225)
     comment = models.TextField()
-    title = models.ForeignKey("Post", on_delete=models.CASCADE)
+    post = models.ForeignKey("Post", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.Author
