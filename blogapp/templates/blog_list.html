@@ -25,8 +25,8 @@
                          style="height: 222px;">
                     <div class="card-body">
                         <h2 class="card-title">{{ post.title }}</h2>
-                        <p class="card-text text-muted h6">{{ request.user.username }} | {{ post.created }} </p>
-                        <p class="card-text">{{ post.blog|truncatewords:25 }}</p>
+                        <p class="card-text text-muted h6">{{ request.user.username }} | {{ post.created }} | {{ post.category.name }} </p>
+                        <p class="card-text">{{ post.blog|slice:":150" }}...</p>
                         <a href="{% url 'blogapp:fullDetail' post.id%}" class="btn btn-primary">Read More
                             &rarr;</a>
                     </div>
