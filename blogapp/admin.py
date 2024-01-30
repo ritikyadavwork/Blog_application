@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, category, Comment
+from .models import Post, Category, Comment
 
 
 @admin.register(Post)
@@ -8,7 +8,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 
-@admin.register(category)
+@admin.register(Category)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['name']
     search_fields = ['name']
