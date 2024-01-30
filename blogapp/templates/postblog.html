@@ -10,7 +10,16 @@ Blogpost
         {% csrf_token %}
         <div class="mb-3">
             <label for="title">Title</label>
-           <input type="text" class="form-control" id="title" name="title" required>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="sel1" class="form-label">Category</label>
+            <select class="form-select" id="sel1" name="category">
+                <option selected>Select</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="mb-3">
             <label for="blog" class="form-label">Blog</label>
@@ -20,7 +29,7 @@ Blogpost
             <label for="upload_plan" class="form-label">Photo</label>
             <input type="file" class="form-control" id="upload_plan" name="images" required>
         </div>
-        <button type="submit" class="btn btn-primary" >Post</button>
+        <button type="submit" class="btn btn-primary">Post</button>
     </form>
 </div>
 {% endblock %}
