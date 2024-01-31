@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post, Category, Comment
 from django.core.paginator import Paginator
@@ -67,3 +67,21 @@ def blogDetail_view(request, post_id):
     return render(request, 'blog_detail.html', context)
 
 
+def update_View(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    context = {
+        'comment': comment
+    }
+    return render(request, 'update_comment.html', context)
+
+
+def update_comment_View(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.method == 'POST':
+        author = request.POST.get('author')
+        comment_text = request.POST.get('msg')
+        comment.Author = author
+        comment.comment = comment_text
+        comment.save()
+        return redirect(reverse('blogapp:fullDetail', kwargs={'post_id': comment.post.id}))
+    return render(request, 'update_comment.html', {'comment': comment})
