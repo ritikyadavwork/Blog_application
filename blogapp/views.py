@@ -77,6 +77,8 @@ def update_View(request, comment_id):
 
 def update_comment_View(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
+    # if request.user  != comment.Author:
+    #     return render(request, 'unauthorized_access.html')
     if request.method == 'POST':
         author = request.POST.get('author')
         comment_text = request.POST.get('msg')
@@ -85,3 +87,9 @@ def update_comment_View(request, comment_id):
         comment.save()
         return redirect(reverse('blogapp:fullDetail', kwargs={'post_id': comment.post.id}))
     return render(request, 'update_comment.html', {'comment': comment})
+
+
+def delete_post_view(request, delete_id):
+    post_delete = Post.objects.get(id=delete_id)
+    post_delete.delete()
+    return redirect('/blog-list')
