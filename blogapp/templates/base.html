@@ -34,6 +34,9 @@
                 {% else %}
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item active">
+                        <a class="nav-link text-light" href="{% url 'blogapp:blogDetail' %}">Blogs</a>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link text-light" href="{% url 'account_signup' %}">Signup</a>
                     </li>
                     <li class="nav-item">
