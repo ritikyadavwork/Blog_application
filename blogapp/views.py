@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, UserProfile
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def homeView(request):
@@ -91,5 +92,27 @@ def update_comment_View(request, comment_id):
 
 def delete_post_view(request, delete_id):
     post_delete = Post.objects.get(id=delete_id)
-    post_delete.delete()
-    return redirect('/blog-list')
+    if request.user == request.user.username:
+        post_delete.delete()
+    else:
+        return render(request, 'unauthorized_access.html')
+
+
+def uploadProfile_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        mobile_number = request.POST.get('mobile')
+        address = request.POST.get('address')
+        photos = request.FILES.get('images')
+        instance = UserProfile.objects.create(name=name, mobile_number=mobile_number, address=address, photos=photos)
+        instance.save()
+        return redirect('/profile-view')
+    return render(request, 'profile.html')
+
+
+def profile_view(request):
+    data = UserProfile.objects.get()
+    context = {
+        'final_data': data
+    }
+    return render(request, 'profile_view.html', context)
