@@ -26,3 +26,15 @@ class Comment(TimeStampedModel):
 
     def __str__(self):
         return self.Author
+
+
+class UserProfile(TimeStampedModel):
+    name = models.CharField(max_length=225)
+    mobile_number = models.CharField(max_length=225)
+    address = models.TextField()
+    photos = models.ImageField(upload_to='user_profile/')
+
+    def __str__(self):
+        return self.name
+
+
