@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.urls import path, include
 from .views import homeView, postBlog_view, blogList_view, blogDetail_view, update_View, update_comment_View, \
-    delete_post_view, uploadProfile_view, profile_view
+    delete_post_view, uploadProfile_view, profile_view, about_view
 
 app_name = 'blogapp'
 
@@ -16,4 +16,5 @@ urlpatterns = [
     path('delete/<int:delete_id>/', delete_post_view, name='delete'),
     path('profile/', uploadProfile_view, name='profile'),
     path('profile-view/', profile_view, name='profile_view'),
+    path('about-us/', about_view, name='about_us')
 ]
