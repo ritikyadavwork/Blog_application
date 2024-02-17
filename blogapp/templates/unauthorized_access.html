@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block body %}
+<h1>Unauthorized Access</h1>
+<p>You do not have permission to access this page.</p>
+<p>Please make sure you are logged in with the correct account.</p>
+<a href="{% url 'account_login' %}">Login</a>
+{% endblock %}
