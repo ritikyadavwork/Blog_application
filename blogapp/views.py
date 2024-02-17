@@ -92,10 +92,8 @@ def update_comment_View(request, comment_id):
 
 def delete_post_view(request, delete_id):
     post_delete = Post.objects.get(id=delete_id)
-    if request.user == request.user.username:
-        post_delete.delete()
-    else:
-        return render(request, 'unauthorized_access.html')
+    post_delete.delete()
+    return redirect('/blog-list')
 
 
 def uploadProfile_view(request):
@@ -111,8 +109,12 @@ def uploadProfile_view(request):
 
 
 def profile_view(request):
-    data = UserProfile.objects.get()
+    user_profile = UserProfile.objects.get()
     context = {
-        'final_data': data
+        'final_data': user_profile
     }
     return render(request, 'profile_view.html', context)
+
+
+def about_view(request):
+    return render(request, 'about_us.html')
