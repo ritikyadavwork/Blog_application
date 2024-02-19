@@ -7,7 +7,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 
 def homeView(request):
-    return render(request, 'home.html')
+    context = {
+        'final_data': UserProfile.objects.get()
+    }
+    return render(request, 'home.html', context)
 
 
 def login(request):
@@ -105,7 +108,10 @@ def uploadProfile_view(request):
         instance = UserProfile.objects.create(name=name, mobile_number=mobile_number, address=address, photos=photos)
         instance.save()
         return redirect('/profile-view')
-    return render(request, 'profile.html')
+    context = {
+        'final_data': UserProfile.objects.get()
+    }
+    return render(request, 'profile.html', context)
 
 
 def profile_view(request):
