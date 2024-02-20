@@ -7,10 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 
 def homeView(request):
-    context = {
-        'final_data': UserProfile.objects.get()
-    }
-    return render(request, 'home.html', context)
+    return render(request, 'home.html')
 
 
 def login(request):
@@ -81,8 +78,8 @@ def update_View(request, comment_id):
 
 def update_comment_View(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
-    # if request.user  != comment.Author:
-    #     return render(request, 'unauthorized_access.html')
+    if request.user != comment.Author:
+        return render(request, 'unauthorized_access.html')
     if request.method == 'POST':
         author = request.POST.get('author')
         comment_text = request.POST.get('msg')
@@ -108,14 +105,11 @@ def uploadProfile_view(request):
         instance = UserProfile.objects.create(name=name, mobile_number=mobile_number, address=address, photos=photos)
         instance.save()
         return redirect('/profile-view')
-    context = {
-        'final_data': UserProfile.objects.get()
-    }
-    return render(request, 'profile.html', context)
+    return render(request, 'profile.html')
 
 
 def profile_view(request):
-    user_profile = UserProfile.objects.get()
+    user_profile = UserProfile.objects.first()
     context = {
         'final_data': user_profile
     }
