@@ -32,17 +32,23 @@ def postBlog_view(request):
     return render(request, 'postblog.html', context)
 
 
-def blogList_view(request):
+def blogList_view(request, category=None):
     search_post = request.GET.get('search')
+    posts = Post.objects.all().order_by('-created')
     if search_post:
         posts = Post.objects.filter(Q(title__icontains=search_post) | Q(category__name__icontains=search_post))
-    else:
-        posts = Post.objects.all().order_by('created')
+    if category:
+        posts = Post.objects.filter(category__name=category)
+
     paginator = Paginator(posts, 3)
     page_num = request.GET.get('page')
     final_data = paginator.get_page(page_num)
+    categories = Category.objects.all()
+    blog = Post.objects.all().order_by('-created')[:3]
     context = {
-        "post": final_data
+        "post": final_data,
+        'categories': categories,
+        'blogs': blog
     }
     return render(request, 'blog_list.html', context)
 
