@@ -1,70 +1,158 @@
 {% extends 'base.html' %}
 {% block meta %}
+<style>
+    /* Adjustments for your custom styles */
+    .blog-post {
+        margin-bottom: 30px;
+    }
 
+    .photo-section {
+        background-color: #f9f9f9;
+        padding: 20px;
+    }
+
+    .photo-section img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+
+    .blog-section {
+        padding: 20px;
+    }
+
+    .search-form {
+        margin-bottom: 20px;
+    }
+
+    .list-view1 .grids5-info {
+        margin-bottom: 20px;
+    }
+
+    .blog-desc1 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .blog-meta {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .blog-meta .meta-item {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .meta-value {
+        color: #999;
+    }
+
+</style>
 {% endblock %}
-{% block title %}  Blog List{% endblock %}
+{% block title %}  Blog List {% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class=" m-auto mt-3 justify-content-end  ">
-            <form class="d-flex  w-50 " action="{% url 'blogapp:blogDetail'%}" method="GET">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        {% for post in post %}
-        <div class="col-md-4 p-2 mt-3 left">
-            <div class="card mb-4">
-                <div class="card">
-                    <img src="{{ post.photos.url }}" alt="{{ post.title }} " class="card-img-top"
-                         style="height: 222px;">
-                    <div class="card-body">
-                        <h2 class="card-title">{{ post.title }}
-                            <a href="{% url 'blogapp:delete' post.id %}" class="confirm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                     class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                </svg>
-                            </a>
-                        </h2>
-                        <p class="card-text text-muted h6">{{ request.user.username }} | {{ post.created }} | {{ post.category.name }} </p>
-                        <p class="card-text">{{ post.blog|slice:":150" }}...</p>
-                        <a href="{% url 'blogapp:fullDetail' post.id %}" class="btn btn-primary">Read More
-                            &rarr;</a>
-                    </div>
-                </div>
+<div class="container mb-3">
+    <div class="row justify-content-end">
+        <div class="col-md-4">
+            <div class="mt-3">
+                <form class="d-flex w-100" action="{% url 'blogapp:blogDetail' %}" method="GET">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                           name="search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
             </div>
         </div>
-        {% endfor %}
-        <div>
-            <nav aria-label="...">
-                <ul class="pagination justify-content-center">
-                    {% if post.has_previous %}
-                    <li class="page-item ">
-                        <a class="page-link" href="?page={{post.previous_page_number}}" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="?page=1#">1</a></li>
-                    {% endif %}
-                    <li class="page-item ">
-                        <a class="page-link" href="">2 </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    {% if post.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{post.next_page_number}}">Next</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
     </div>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {% for post in post %}
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <!-- Image on the left -->
+                <img class="card-img-left flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb"
+                     src="{{ post.photos.url }}"
+                     alt="{{ post.title }}"
+                     data-holder-rendered="true" style="width: 200px; height: 250px;">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-primary">{{ request.user.username }}</strong>
+                    <h3 class="mb-0">
+                        <a class="text-dark text-decoration-none" href="#">{{ post.title }}</a>
+                    </h3>
+
+                    <p class="card-text mb-auto">{{ post.blog|slice:":150" }}...</p>
+                    <div class="mb-1 text-muted">{{ post.created }}</div>
+                    <a href="{% url 'blogapp:fullDetail' post.id %}" class="btn btn-primary">Read More &rarr;</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <div class="p-4">
+                <h4 class="fst-italic">Categories</h4>
+                <ul class="list-unstyled">
+                    {% for category in categories %}
+                    <li><a href="{% url 'blogapp:blog_list_category' category.name %}" class="text-decoration-none">{{category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h4 class="fst-italic">Recent Blog</h4>
+                {% for blogs in blogs %}
+                <ul class="list-unstyled">
+                    <li>
+                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
+                           href="{% url 'blogapp:fullDetail' blogs.id%}">
+                            <img src="{{blogs.photos.url}}" class="bd-placeholder-img" width="96" height="96"
+                                 alt="{{ blogs.title }}">
+                            <div class="col-lg-8">
+                                <h6 class="mb-0"> {{blogs.title}}</h6>
+                                <small class="text-body-secondary">{{blogs.created}}</small>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+            <!-- <div class="p-4">
+              <h4 class="fst-italic">Archives</h4>
+              <ol class="list-unstyled mb-0">
+                <li><a href="#">March 2021</a></li>
+                <li><a href="#">February 2021</a></li>
+              </ol>
+            </div> -->
+        </div>
+    </div>
+    <div class="container">
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                {% if post.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{post.previous_page_number}}" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                {% endif %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=2">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page=3">3</a>
+                </li>
+                {% if post.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{post.next_page_number}}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
 <script>
     $('.confirm').on('click', function () {
         return confirm('Are you sure?');
