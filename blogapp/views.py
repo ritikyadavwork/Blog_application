@@ -115,7 +115,8 @@ def uploadProfile_view(request):
 
 
 def profile_view(request):
-    user_profile = UserProfile.objects.first()
+    user_id = request.user.id
+    user_profile = UserProfile.objects.filter(user_id=user_id).first()
     context = {
         'final_data': user_profile
     }
