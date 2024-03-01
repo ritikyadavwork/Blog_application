@@ -13,12 +13,12 @@ Profile
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
-                        <img src="{{ final_data.photos.url }}"
+                        <img src="{{ image.photos.url }}"
                              alt="avatar"
                              class="rounded-circle img-fluid" style="width: 150px;">
                         <h5 class="my-3">{{ request.user.username }}</h5>
-                        <p class="text-muted mb-1">Full Stack Developer</p>
-                        <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                        <p class="text-muted mb-1"></p>
+                        <p class="text-muted mb-4">{{final_data.name}}</p>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@ Profile
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label for="Name">Full Name</label>
+                                <label for="Name">About</label>
                                 <input type="text" class="form-control" id="Name" name="name">
                             </div>
                             <div class="form-group">
