@@ -1,5 +1,6 @@
 from django.db import models
 from model_utils.models import TimeStampedModel
+from django.contrib.auth.models import User
 
 
 class Post(TimeStampedModel):
@@ -29,6 +30,7 @@ class Comment(TimeStampedModel):
 
 
 class UserProfile(TimeStampedModel):
+    user_profile = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=225)
     mobile_number = models.CharField(max_length=225)
     address = models.TextField()
@@ -38,3 +40,7 @@ class UserProfile(TimeStampedModel):
         return self.name
 
 
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='likes', null=True)
