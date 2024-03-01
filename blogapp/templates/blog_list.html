@@ -89,6 +89,8 @@
                     <a href="{% url 'blogapp:fullDetail' post.id %}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
             </div>
+            {% empty %}
+            No Record Found
             {% endfor %}
         </div>
         <div class="col-md-4">
