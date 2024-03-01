@@ -108,19 +108,26 @@ def uploadProfile_view(request):
         mobile_number = request.POST.get('mobile')
         address = request.POST.get('address')
         photos = request.FILES.get('images')
-        instance = UserProfile.objects.create(name=name, mobile_number=mobile_number, address=address, photos=photos)
-        instance.save()
+        user_profile = request.user
+        instance, created = UserProfile.objects.get_or_create(
+            user_profile=user_profile,
+            defaults={'name': name, 'mobile_number': mobile_number, 'address': address, 'photos': photos}
+        )
         return redirect('/profile-view')
     return render(request, 'profile.html')
 
 
 def profile_view(request):
-    user_id = request.user.id
-    user_profile = UserProfile.objects.filter(user_id=user_id).first()
-    context = {
-        'final_data': user_profile
-    }
-    return render(request, 'profile_view.html', context)
+    user = request.user
+    if user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user_profile=user)
+            context = {'final_data': user_profile}
+            return render(request, 'profile_view.html', context)
+        except UserProfile.DoesNotExist:
+            return redirect('blogapp:profile')
+    else:
+        return redirect('login')
 
 
 def about_view(request):
