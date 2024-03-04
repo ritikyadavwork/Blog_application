@@ -8,7 +8,7 @@
         <div class="col-md-12 m-auto   mt-3 left  top">
             <div class="card-body">
                 <h1> {{ object.title }}</h1>
-                <p class=" text-muted">{{ request.user.username }} | {{ object.created }} |
+                <p class=" text-muted">{{ object.created_by }} | {{ object.created.date }} |
                     {{object.category.name}} </p>
                 <img src="{{ object.photos.url }}" alt="{{ object.title }} " class="card-img-top"
                      style="height: 510px;">
@@ -20,10 +20,6 @@
             <form method="post" enctype="multipart/form-data" action="{% url 'blogapp:fullDetail' post_id=object.id %}">
                 {% csrf_token %}
                 <h3>Leave a comment:</h3>
-                <div class="form-group">
-                    <label for="title" class="my-2 fw-bold">Author Name</label>
-                    <input type="text" name="author" id="title" class="form-control" required>
-                </div>
                 <div class="form-group">
                     <label for="message" class="my-2 fw-bold">Comment</label>
                     <textarea name="msg" id="message" cols="30" rows="5" class="form-control"
@@ -46,7 +42,7 @@
                         </svg>
                         <div>
                             <h6 class="fw-bold text-primary mb-1">
-                                {{comment.Author}}
+                                {{comment.commented_by}}
                                 <a href="{% url 'blogapp:updateComment' comment.id %}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-pencil-fill" viewBox="0 0 16 16">
