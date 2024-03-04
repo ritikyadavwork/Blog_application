@@ -22,7 +22,14 @@ def postBlog_view(request):
         photos = request.FILES.get('images')
         category_id = request.POST.get('category')
         category = Category.objects.get(id=category_id)
-        instance = Post.objects.create(title=title, blog=blog, photos=photos, category=category)
+        created_by = request.user
+        instance = Post.objects.create(
+            title=title,
+            blog=blog,
+            photos=photos,
+            category=category,
+            created_by=request.user
+        )
         instance.save()
         return redirect('/blog-list')
     categories = Category.objects.all()
@@ -56,10 +63,10 @@ def blogList_view(request, category=None):
 def blogDetail_view(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.method == "POST":
-        author = request.POST.get('author')
+        commented_by = request.user
         comment_text = request.POST.get('msg')
         comment = Comment.objects.create(
-            Author=author,
+            commented_by=request.user,
             comment=comment_text,
             post=post,
         )
@@ -84,15 +91,14 @@ def update_View(request, comment_id):
 
 def update_comment_View(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
-    if request.user != comment.Author:
+    if request.user != comment.commented_by:
         return render(request, 'unauthorized_access.html')
-    if request.method == 'POST':
-        author = request.POST.get('author')
-        comment_text = request.POST.get('msg')
-        comment.Author = author
-        comment.comment = comment_text
-        comment.save()
-        return redirect(reverse('blogapp:fullDetail', kwargs={'post_id': comment.post.id}))
+    else:
+        if request.method == 'POST':
+            comment_text = request.POST.get('msg')
+            comment.comment = comment_text
+            comment.save()
+            return redirect(reverse('blogapp:fullDetail', kwargs={'post_id': comment.post.id}))
     return render(request, 'update_comment.html', {'comment': comment})
 
 
