@@ -8,6 +8,7 @@ class Post(TimeStampedModel):
     blog = models.TextField()
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     photos = models.ImageField(upload_to='Upload_images/')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
@@ -21,12 +22,12 @@ class Category(TimeStampedModel):
 
 
 class Comment(TimeStampedModel):
-    Author = models.CharField(max_length=225)
+    commented_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     comment = models.TextField()
     post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.Author
+        return self.comment[:20]
 
 
 class UserProfile(TimeStampedModel):
@@ -44,3 +45,5 @@ class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='likes', null=True)
+
+
