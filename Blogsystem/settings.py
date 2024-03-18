@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-(li_q(tf(=eabs3@@&&c479fnmi1=0_6%4!%h4q=4ah-8^l4jn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -88,8 +88,11 @@ AUTHENTICATION_BACKENDS = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'blogsystem',
+        'USER': 'postgres',
+        'PASSWORD': '@Ritik12',
+        'HOST': 'localhost',
     }
 }
 
@@ -143,7 +146,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 EMAIL_HOST = "smtp.gmail.com"
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-port
