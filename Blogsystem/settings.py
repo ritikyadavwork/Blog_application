@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'blogapp',
     'allauth',
-    'crispy_forms',
-    'crispy_bootstrap5'
+    'ckeditor',
+    "crispy_forms",
+    "crispy_bootstrap5",
+    'notifications',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -115,7 +118,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-ACCOUNT_EMAIL_REQUIRED = True
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],  # Redis running on localhost
+        },
+    },
+}
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -157,3 +167,32 @@ EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
 EMAIL_HOST_USER = "ritikyadavwork23@gmail.com"
 EMAIL_HOST_PASSWORD = "EMAIL_HOST_PASSWORD"
+
+# Django Notifications
+# ------------------------------------------------------------------------
+DJANGO_NOTIFICATIONS_CONFIG = {
+    'SOFT_DELETE': True,
+    'USE_JSONFIELD': True,
+}
+
+# django-allauth
+# ------------------------------------------------------------------------------
+# ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", default=False)
+# https://docs.allauth.org/en/latest/account/configuration.html
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+# https://docs.allauth.org/en/latest/account/configuration.html
+ACCOUNT_EMAIL_REQUIRED = True
+# https://docs.allauth.org/en/latest/account/configuration.html
+ACCOUNT_USERNAME_REQUIRED = False
+# https://docs.allauth.org/en/latest/account/configuration.html
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# https://docs.allauth.org/en/latest/account/configuration.html
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# https://docs.allauth.org/en/latest/account/configuration.html
+# ACCOUNT_ADAPTER = "pace_project.users.adapters.AccountAdapter"
+# # https://docs.allauth.org/en/latest/account/forms.html
+# ACCOUNT_FORMS = {"signup": "pace_project.partner.forms.PartnerSignupForm"}
+# # https://docs.allauth.org/en/latest/socialaccount/configuration.html
+# SOCIALACCOUNT_ADAPTER = "pace_project.users.adapters.SocialAccountAdapter"
+# # https://docs.allauth.org/en/latest/socialaccount/configuration.html
+# SOCIALACCOUNT_FORMS = {"signup": "pace_project.users.forms.UserSocialSignupForm"}
