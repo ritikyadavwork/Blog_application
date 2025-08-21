@@ -99,7 +99,8 @@
                 <h4 class="fst-italic">Categories</h4>
                 <ul class="list-unstyled">
                     {% for category in categories %}
-                    <li><a href="{% url 'blogapp:blog_list_category' category.name %}" class="text-decoration-none">{{category.name}}</a></li>
+                    <li><a href="{% url 'blogapp:blog_list_category' category.name %}" class="text-decoration-none">{{category.name}}</a>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>

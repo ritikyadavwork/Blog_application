@@ -7,12 +7,13 @@
     <div class="row">
         <div class="col-md-12 m-auto   mt-3 left  top ">
             <div class="card-body ">
-                <h1 > {{ object.title }}</h1>
+                <h1> {{ object.title }}</h1>
                 <ul class="list-unstyled">
                     <li>
                         <div class="col-lg-8">
                             <h6 class="mb-0"> {{ object.created_by }} </h6>
-                            <small class="text-body-secondary">Published in <b>{{object.category.name}}</b> &nbsp.&nbsp {{object.created.date }} </small>
+                            <small class="text-body-secondary">Published in <b>{{object.category.name}}</b> &nbsp.&nbsp
+                                {{object.created.date }} </small>
                         </div>
                     </li>
                 </ul>
@@ -20,7 +21,7 @@
                 <img src="{{ object.photos.url }}" alt="{{ object.title }} " class="card-img-top"
                      style="height: 510px;">
 
-                <p class="card-text mt-3 mb-3 ">{{ object.blog }}</p>
+                <p class="card-text mt-3 mb-3 ">{{ object.blog | safe}}</p>
             </div>
         </div>
         <div class=" col-md-6  offset-md-1 offset-sm-1 col-12 mt-4">
