@@ -67,16 +67,19 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
 
-# copy application code to WORKDIR
-COPY --chown=django:django . ${APP_HOME}
+## copy application code to WORKDIR
+#COPY --chown=django:django . ${APP_HOME}
+#
+## make django owner of the WORKDIR directory as well.
+#RUN chown -R django:django ${APP_HOME}
 
-# make django owner of the WORKDIR directory as well.
-RUN chown -R django:django ${APP_HOME}
-
+WORKDIR /app
+COPY . /app
+ENV DJANGO_SETTINGS_MODULE=Blogsystem.settings
+ENV DATABASE_URL=psql://postgres:%40Ritik12@localhost:5432/blogsystem
 USER django
 
-RUN DATABASE_URL="" \
-  DJANGO_SETTINGS_MODULE="Blogsystem.settings" \
-  python manage.py compilemessages
+RUN python manage.py compilemessages
+
 
 ENTRYPOINT ["/entrypoint"]
