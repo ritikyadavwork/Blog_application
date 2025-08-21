@@ -74,10 +74,10 @@ RUN chown -R django:django ${APP_HOME}
 # Switch working directory to the Django project
 WORKDIR ${APP_HOME}
 
-# Compile translations
-RUN DATABASE_URL="psql://postgres:%40Ritik12@localhost:5432/blogsystem" \
-    DJANGO_SETTINGS_MODULE="Blogsystem.settings" \
-    python manage.py compilemessages
+## Compile translations
+#RUN DATABASE_URL="psql://postgres:%40Ritik12@localhost:5432/blogsystem" \
+#    DJANGO_SETTINGS_MODULE="Blogsystem.settings" \
+#    python manage.py compilemessages
 
 
 
