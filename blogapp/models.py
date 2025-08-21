@@ -1,11 +1,12 @@
 from django.db import models
 from model_utils.models import TimeStampedModel
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 
 class Post(TimeStampedModel):
     title = models.CharField(max_length=200, null=True)
-    blog = models.TextField()
+    blog = RichTextField()
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     photos = models.ImageField(upload_to='Upload_images/')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
